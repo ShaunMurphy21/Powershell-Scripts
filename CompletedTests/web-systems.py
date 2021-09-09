@@ -5,7 +5,6 @@ import random
 import string
 import threading
 
-
 url = 'https://web-systems.co.uk/my-account/'
 
 emailList = []
@@ -35,9 +34,6 @@ def main(name): #function for the main part of the program
 
 		username = name.lower() + name_extra + random.choice(emailList) #combines all the elements. So a name from names.json, random letters/digits/symbols we created above then adds the random email domain
 		password = ''.join(random.choice(chars)for i in range (8))
-
-
-
 
 		request.post(url, allow_redirects=True, data={
 
