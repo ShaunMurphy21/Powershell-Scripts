@@ -5,7 +5,6 @@ import random #self explanatory
 import string #to use when making randomised emails/passwords
 import threading #speed up script
 
-
 url = 'https://httpbin.org'
 
 numbers = string.digits
@@ -33,24 +32,17 @@ def address_Gen():
 	global addy
 	addy = address1 + ' ' + address2.upper() + ' GARDENS'
 	return addy
-	
 
 postcode = 0
 
 def postGen():
 
-	
 	post1 = ''.join(random.choice(chars2)for i in range(2))
 	post2 = ''.join(random.choice(numbers)for i in range(2))
 	post3 = ''.join(random.choice(chars2)for i in range(2))
 	global postcode
 	postcode = post1.upper() + post2.upper() + post3.upper()
 	return postcode
-	
-
-
-
-
 
 emailList = []
 
