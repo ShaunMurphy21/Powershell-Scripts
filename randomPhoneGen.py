@@ -1,11 +1,8 @@
 import string
 import random
 
-
 email = []
-
 chars = string.ascii_letters + '123456789'
-
 
 for i in range(10):
 
