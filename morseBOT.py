@@ -74,5 +74,5 @@ async def on_message(message):
     await message.channel.send(ke)
     await message.delete()
 keepalive()
-client.run('OTgwNDQxOTgzNzUzNTI3MzU3.Ggf3HJ.cWGSAxPRi4Grotx9wFu6x2bcgIk9O3cdX22TvU')
+client.run('#####')
   
