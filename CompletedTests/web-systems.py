@@ -5,7 +5,7 @@ import random
 import string
 import threading
 
-url = 'https://web-systems.co.uk/my-account/'
+url = 'exmaple.com'
 
 emailList = []
 
