@@ -5,7 +5,7 @@ import random #self explanatory
 import string #to use when making randomised emails/passwords
 import threading #speed up script
 
-url = 'https://httpbin.org'
+url = 'example.com'
 
 numbers = string.digits
 
