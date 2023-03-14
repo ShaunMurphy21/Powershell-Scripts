@@ -4,6 +4,8 @@
     NewStart
 #>
 
+$groupList=@('RestrictedDataAcquisition', 'RestrictedDatadevelopment','RestrictedRaise', 'RestrictedRaise_Sensitive','RestrictedRAISESummaryReports','RestrictedFurtherEducationandSkills','RestrictedFurtherEducationandSkillsRemit','RestrictedSocialCare','RestrictedSocialCare_Sensitive','RestrictedSchools','RestrictedRasam','RestrictedEarlyYearsTeam','RestrictedIndependentSchools','RestrictedL3VAANDPIDPDATA','RestrictedOBREPORTS')
+
 Add-Type -Name Window -Namespace Console -MemberDefinition '
 [DllImport("Kernel32.dll")]
 public static extern IntPtr GetConsoleWindow();
@@ -21,6 +23,9 @@ function InfoForm( $msgBody){
     [System.Windows.MessageBox]::Show($msgBody)
 
 }
+
+
+
 
 $gammaEmail = @'
 
@@ -98,8 +103,16 @@ IT Service Desk Team
 
 
 
+$Form2                            = New-Object system.Windows.Forms.Form
+$Form2.ClientSize                 = New-Object System.Drawing.Point(670,700)
+$Form2.text                       = "Form"
+$Form2.TopMost                    = $true
+$Form2.BackgroundImage            = $img
+
+
+
 $Form                            = New-Object system.Windows.Forms.Form
-$Form.ClientSize                 = New-Object System.Drawing.Point(670,600)
+$Form.ClientSize                 = New-Object System.Drawing.Point(670,700)
 $Form.text                       = "Form"
 $Form.TopMost                    = $false
 
@@ -238,7 +251,7 @@ $password.Add_Click({
     }
     Set-ADAccountPassword -Identity $samName.Text -NewPassword (ConvertTo-SecureString -AsPlainText $month -Force)
 
-    $emailbox.Text = 'Password Set'
+    $emailbox.Text = 'Password Set to:' + $month
     
 })
 
@@ -270,25 +283,28 @@ try{
     Set-MsolUser -UserPrincipalName ($user.userprincipalname) -UsageLocation GB
     Set-MsolUserLicense -UserPrincipalName ($user.userprincipalname) -AddLicenses $license
     Set-MsolUserLicense -UserPrincipalName ($user.userprincipalname) -LicenseOptions $E5_DefaultApps
+    $license = Get-MsolUser -UserPrincipalName $user.userprincipalname | select Licenses
+    $emailBox.Text = 'Licenses assigned succesfully!' + $license
     }
+    
     catch{
     
-        InfoForm "Error Assigning Licenses, use old script or do manually."
-
+     
     }
 
     if($upnCheck.Checked){
 
     try{
-        $user = Get-ADUser -Filter {userprincipalname -eq $TextBox1.Text} | select samaccountname
+        $user = Get-ADUser -Identity $samName.Text
         $name = $user | select GivenName, Surname
         $newUPN = $name.GivenName + '.' + $name.Surname +'@Ofsted.Gov.UK'
         $newUPN = $newUPN.replace("'","")
 
-        Set-ADUser -Identity $user.samaccountname -UserPrincipalName $newUPN
-        Set-ADUser -Identity $user.samaccountname -EmailAddress $newUPN
-        Start-Sleep -Seconds 1
+        Set-ADUser -Identity $user -UserPrincipalName $newUPN
+        Set-ADUser -Identity $user -EmailAddress $newUPN
+        $emailBox.Text = $emailBox.Text + 'UPN Changed'
         }
+        
         catch{
             InfoForm "Error Changing UPN, do manually"
         }
@@ -300,13 +316,14 @@ try{
         Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU=Windows 10 Users,OU=Mobile,OU=Ofsted User Accounts,DC=Ofsteded,DC=Ofsted,DC=Gov,DC=Uk"
         Set-User -Identity $user.samaccountname -fax "LTA"
         Set-ADUser -Identity $user.samaccountname -Enable:$true
-        Start-Sleep -Seconds 3
+        Start-Sleep -Seconds 1
         $MB1 = Get-ADUser $user.samaccountname
         $MB3 = $MB1.UserPrincipalName
         $MB4 = $MB1.SamAccountName + '@Ofsted365.mail.onmicrosoft.com'
 
         Enable-RemoteMailbox -Identity $MB3 -RemoteRoutingAddress $MB4
         Start-Sleep -Seconds 1
+        $emailBox.Text = $emailBox.Text + 'Mailbox Migrated'
         
         }
         catch{
@@ -332,6 +349,17 @@ $mailboxCheck.width              = 181
 $mailboxCheck.height             = 20
 $mailboxCheck.location           = New-Object System.Drawing.Point(10,56)
 $mailboxCheck.Font               = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+
+$ProgressBar = New-Object System.Windows.Forms.ProgressBar
+$ProgressBar.Width = 640
+$ProgressBar.Height = 25
+$ProgressBar.Visible = $True
+$ProgressBar.Minimum = $MinMax.Minimum
+$ProgressBar.Maximum = $MinMax.Maximum
+$ProgressBar.Value = $MinMax.Minimum
+$ProgressBar.Step = 1
+$ProgressBar.Location = New-Object System.Drawing.Point(10,650)
+$Form.Controls.Add($ProgressBar)
 
 $roleBox                         = New-Object system.Windows.Forms.ComboBox
 $roleBox.width                   = 134
@@ -411,6 +439,7 @@ $emailBox.height                 = 350
 $emailBox.location               = New-Object System.Drawing.Point(8,243)
 $emailBox.Font                   = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
+
 $loginButton                     = New-Object system.Windows.Forms.Button
 $loginButton.text                = "Log In"
 $loginButton.width               = 213
@@ -418,18 +447,76 @@ $loginButton.height              = 70
 $loginButton.location            = New-Object System.Drawing.Point(8,160)
 $loginButton.Font                = New-Object System.Drawing.Font('Microsoft Sans Serif',15)
 
+$nasapic                         = New-Object system.Windows.Forms.Button
+$nasapic.text                    = "NASA API"
+$nasapic.width                   = 148
+$nasapic.height                  = 30
+$nasapic.location                = New-Object System.Drawing.Point(10,600)
+$nasapic.Font                    = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$nasapic.Add_Click({
+    $picday = 'https://api.nasa.gov/planetary/apod?api_key=DpEmA8XVdmQ24jW1hwjbnpyNvnZrVwyfksvcSlRt
+'
+    $pic = Invoke-RestMethod $picday
+
+iwr $pic.url -OutFile "~\Documents\nasa.jpg"
+$file = (get-item '~\Documents\nasa.jpg')
+$img = [System.Drawing.Image]::FromFile($file)
+
+    $Form2.ShowDialog()
+
+})
+
+$weth                        = New-Object system.Windows.Forms.Button
+$weth.text                    = "Weather Forecast API"
+$weth.width                   = 148
+$weth.height                  = 30
+$weth.location                = New-Object System.Drawing.Point(170,600)
+$weth.Font                    = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$weth.Add_Click({
+    $apiUrl = 'https://api.open-meteo.com/v1/forecast?latitude=52.952152&longitude=-1.142590&current_weather=true'
+    $weather = Invoke-RestMethod $apiUrl
+
+    $weather = 'The temperature is: ' + $weather.current_weather.temperature
+
+    InfoForm $weather
+
+})
+
+$groupReport                        = New-Object system.Windows.Forms.Button
+$groupReport.text                    = "Restricted Report"
+$groupReport.width                   = 148
+$groupReport.height                  = 30
+$groupReport.location                = New-Object System.Drawing.Point(330,600)
+$groupReport.Font                    = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
+$groupReport.Add_Click({
+        try{
+        foreach($grp in $groupList){
+    
+     Get-ADGroupMember -Identity $grp -Recursive | Get-ADUser -Properties * | Select-Object Name,Mail | Export-Csv -Path C:\Support\$grp.csv -Notypeinformation
+     Write-Progress -Activity "Completeing" -Status "$PercentComplete% Complete:" -PercentComplete $PercentComplete
+          }
+          InfoForm "Completed Succesfully, Reports are in  C:\Support"
+    }
+    catch{
+    
+    }
+
+
+})
+
+
 $loginButton.Add_Click({
 
     Connect-MsolService
     $UserCredOP = Get-Credential
     $SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://e2k161hq.ofsteded.ofsted.gov.uk/PowerShell/ -Authentication Kerberos -Credential $UserCredOP
     Import-PSSession $SessionOP -allowclobber
-
+    lol
 
 })
 
 
-$Form.controls.AddRange(@($Groupbox1,$Groupbox2,$Groupbox3,$samName,$Label1,$emailBox,$loginButton,$password,$checkAccount,$unlock))
+$Form.controls.AddRange(@($Groupbox1,$Groupbox2,$Groupbox3,$samName,$Label1,$emailBox,$loginButton,$password,$checkAccount,$unlock,$nasapic, $weth,$groupReport))
 $Groupbox3.controls.AddRange(@($phoneNumber,$numberButton))
 $Groupbox1.controls.AddRange(@($Button1,$upnCheck,$mailboxCheck))
 $Groupbox2.controls.AddRange(@($roleBox,$officeBox,$dateBox,$boxxeButton,$Label2,$Label3,$Label4))
