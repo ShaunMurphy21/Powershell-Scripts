@@ -19,7 +19,7 @@ function MainProg{
     $mail = $emails.Split(',')
 
 
-    $license = "Ofsted365:M365EDU_A5_FACULTY"
+    $license = "M365EDU_A5_FACULTY"
 
     $DisabledApps=@()
     $DisabledApps+="INFORMATION_BARRIERS"
