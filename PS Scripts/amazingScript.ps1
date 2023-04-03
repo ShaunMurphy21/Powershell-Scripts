@@ -4,7 +4,6 @@
     NewStart
 #>
 
-$groupList=@('RestrictedDataAcquisition', 'RestrictedDatadevelopment','RestrictedRaise', 'RestrictedRaise_Sensitive','RestrictedRAISESummaryReports','RestrictedFurtherEducationandSkills','RestrictedFurtherEducationandSkillsRemit','RestrictedSocialCare','RestrictedSocialCare_Sensitive','RestrictedSchools','RestrictedRasam','RestrictedEarlyYearsTeam','RestrictedIndependentSchools','RestrictedL3VAANDPIDPDATA','RestrictedOBREPORTS')
 
 Add-Type -Name Window -Namespace Console -MemberDefinition '
 [DllImport("Kernel32.dll")]
@@ -34,44 +33,12 @@ Hi Gamma,
 Could you please {0} {1} for user {2} ; {3}
 
 Thanks,
-Ofsted IT Team
+
 
 
 '@
 
-$hashLocation = @{'Birmingham'='
-23 Stephenson Street
-Birmingham
-B2 4BH';
-'Bristol'='
-2 Rivergate
-Temple Quay
-Bristol
-BS1 6EH';'Cambridge'='
-1st floor
-Eastbrook
-Shaftesbury Road
-Cambridge
-CB2 8DR';'London'='
-Clive House
-70 Petty France
-Westminster
-London
-SW1H 9EX';'Manchester'='
-Piccadilly Gate​
-Store Street
-Manchester
-M1 2WD';'Nottingham' = '
-Agora
-6 Cumberland Place
-Nottingham
-NG1 6HJ';'York'='
-2nd Floor​
-Foss House
-Kings Pool
-1-2 Peasholme Green
-York
-YO1 7PX'}
+$hashLocation = @{officeLocations}
 
 $hmi_scri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Pro 7/7+')
 $eyri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Laptop 4')
@@ -82,22 +49,7 @@ $office = @('PSU x1 Headset x1','Surface Pro 5/6')
 $Contractor = @('PSU x1','Lenovo 260')
 
 $boxxeEmail = @'
-Boxxe please can you reply back with a ticket reference once this has been logged and confirm when collected
-NEW STARTER
- 
-The name of the user: {0}
-Job Role (One of: HMI; SCRI; EYRI; Director level; BI Developer/ IT Role; Hybrid Worker; Office Based; Contractor ): {1}
-Device Type: {2}
-Any additional item(s) requested: {3}
-Username: {4}
-Password:{5}
-Email: {6}
-Delivery Date: {7}
-Phone number (if needed for DPD updates): Managers Phone: {8}
-Delivery address: {9}
-
-Thanks,
-IT Service Desk Team
+Email for formatting goes here
 
 '@
 
@@ -235,17 +187,7 @@ $password.Add_Click({
     
     {
 
-    02{"FebruaryPhoneTent@7"}
-    03{"MarchCloudHappy@7"}
-    04{"AprilNokiaWater@7"}
-    05{"MayPencilWire@7"}
-    06{"JuneBridgeAgile@7"}
-    07{"JulyBrickBent@7"}
-    08{"AugustPlayError@7"}
-    09{"SeptemberRuffleCake@7"}
-    10{"OctoberNotebookHelp@7"}
-    11{"NovemberShufflePaid@7"}
-    12{"DecemberPlankWedding@7"}
+#passwordsHere
 
 
     }
@@ -261,7 +203,7 @@ $user = Get-ADUser -Identity $samName.Text -Properties *
 
 try{
 
-    $license = "Ofsted365:M365EDU_A5_FACULTY"
+    $license = "M365EDU_A5_FACULTY"
 
     $DisabledApps=@()
     $DisabledApps+="INFORMATION_BARRIERS"
@@ -297,7 +239,7 @@ try{
     try{
         $user = Get-ADUser -Identity $samName.Text
         $name = $user | select GivenName, Surname
-        $newUPN = $name.GivenName + '.' + $name.Surname +'@Ofsted.Gov.UK'
+        $newUPN = $name.GivenName + '.' + $name.Surname +'@domain'
         $newUPN = $newUPN.replace("'","")
 
         Set-ADUser -Identity $user -UserPrincipalName $newUPN
@@ -313,13 +255,13 @@ try{
 
        try{
 
-        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU=Windows 10 Users,OU=Mobile,OU=Ofsted User Accounts,DC=Ofsteded,DC=Ofsted,DC=Gov,DC=Uk"
+        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU"
         Set-User -Identity $user.samaccountname -fax "LTA"
         Set-ADUser -Identity $user.samaccountname -Enable:$true
         Start-Sleep -Seconds 1
         $MB1 = Get-ADUser $user.samaccountname
         $MB3 = $MB1.UserPrincipalName
-        $MB4 = $MB1.SamAccountName + '@Ofsted365.mail.onmicrosoft.com'
+        $MB4 = $MB1.SamAccountName + '@routing'
 
         Enable-RemoteMailbox -Identity $MB3 -RemoteRoutingAddress $MB4
         Start-Sleep -Seconds 1
