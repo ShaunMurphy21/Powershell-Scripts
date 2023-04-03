@@ -26,7 +26,7 @@ Hi Gamma,
 Could you please assign {0} to user {1} ; {2}
 
 Thanks,
-Ofsted IT Team
+
 
 
 '@
