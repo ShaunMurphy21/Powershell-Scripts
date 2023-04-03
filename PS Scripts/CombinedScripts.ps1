@@ -20,7 +20,7 @@ function InfoForm( $msgBody){
 
 
 $UserCredOP = Get-Credential
-$SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://e2k161hq.ofsteded.ofsted.gov.uk/PowerShell/ -Authentication Kerberos -Credential $UserCredOP
+$SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri connectionUrl -Authentication Kerberos -Credential $UserCredOP
 Import-PSSession $SessionOP -allowclobber
 
 $Form                            = New-Object system.Windows.Forms.Form
@@ -73,7 +73,7 @@ $Form.controls.AddRange(@($emailLabel,$TextBox1,$upnCheck,$mailboxCheck,$assignB
 $assignButton.Add_Click({
     try{
 
-    $license = "Ofsted365:M365EDU_A5_FACULTY"
+    $license = "M365EDU_A5_FACULTY"
 
     $DisabledApps=@()
     $DisabledApps+="INFORMATION_BARRIERS"
@@ -107,7 +107,7 @@ $assignButton.Add_Click({
     try{
         $user = Get-ADUser -Filter {userprincipalname -eq $TextBox1.Text} | select samaccountname
         $name = Get-ADUser -Identity $user.samaccountname | select GivenName, Surname
-        $newUPN = $name.GivenName + '.' + $name.Surname +'@Ofsted.Gov.UK'
+        $newUPN = $name.GivenName + '.' + $name.Surname +'@domain'
         $newUPN = $newUPN.replace("'","")
 
         Set-ADUser -Identity $user.samaccountname -UserPrincipalName $newUPN
@@ -122,13 +122,13 @@ $assignButton.Add_Click({
 
        try{
 
-        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU=Windows 10 Users,OU=Mobile,OU=Ofsted User Accounts,DC=Ofsteded,DC=Ofsted,DC=Gov,DC=Uk"
+        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU"
         Set-User -Identity $user.samaccountname -fax "LTA"
         Set-ADUser -Identity $user.samaccountname -Enable:$true
         Start-Sleep -Seconds 5
         $MB1 = Get-ADUser $user.samaccountname
         $MB3 = $MB1.UserPrincipalName
-        $MB4 = $MB1.SamAccountName + '@Ofsted365.mail.onmicrosoft.com'
+        $MB4 = $MB1.SamAccountName + '@routing'
 
         Enable-RemoteMailbox -Identity $MB3 -RemoteRoutingAddress $MB4
         Start-Sleep -Seconds 1
