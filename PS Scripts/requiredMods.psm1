@@ -25,10 +25,7 @@ function methodOfSearch{
 }
 
 function GiveGroup{
-    $GroupNames = [ordered]@{'1' ='RestrictedDataAcquisition';'2' = 'RestrictedDatadevelopment'; '3' = 'RestrictedRaise';'4' = 'RestrictedRaise_Sensitive';`
-    '5'= 'RestrictedRAISESummaryReports'; '6' = 'RestrictedFurtherEducationandSkills';'7' = 'RestrictedFurtherEducationandSkillsRemit'; '8' = 'RestrictedSocialCare';`
-    '9'='RestrictedSocialCare_Sensitive';'10'='RestrictedSchools';'11'='RestrictedRasam';'12'='RestrictedEarlyYearsTeam';'13'='RestrictedIndependentSchools';`
-    '14'='RestrictedL3VAANDPIDPDATA';'15'='RestrictedOBREPORTS'}
+    $GroupNames = [ordered]@{groupNames}
     $GroupNames
     $GroupSelection =  Read-Host 'Enter a number'
     $GroupSelection = $GroupNames.$GroupSelection
