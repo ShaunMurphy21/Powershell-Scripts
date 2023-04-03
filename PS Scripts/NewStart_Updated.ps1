@@ -26,13 +26,13 @@ Hi Gamma,
 Could you please assign {0} to user {1} ; {2}
 
 Thanks,
-Ofsted IT Team
+
 
 
 '@
 
 $UserCredOP = Get-Credential
-$SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://e2k161hq.ofsteded.ofsted.gov.uk/PowerShell/ -Authentication Kerberos -Credential $UserCredOP
+$SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri connectionURI -Authentication Kerberos -Credential $UserCredOP
 Import-PSSession $SessionOP -allowclobber
 
 $Form                            = New-Object system.Windows.Forms.Form
@@ -143,7 +143,7 @@ $assignButton.Add_Click({
     try{
         $user = Get-ADUser -Filter {userprincipalname -eq $TextBox1.Text} | select samaccountname
         $name = Get-ADUser -Identity $user.samaccountname | select GivenName, Surname
-        $newUPN = $name.GivenName + '.' + $name.Surname +'@Ofsted.Gov.UK'
+        $newUPN = $name.GivenName + '.' + $name.Surname +'@domain'
         $newUPN = $newUPN.replace("'","")
 
         Set-ADUser -Identity $user.samaccountname -UserPrincipalName $newUPN
@@ -158,13 +158,13 @@ $assignButton.Add_Click({
 
        try{
 
-        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU=Windows 10 Users,OU=Mobile,OU=Ofsted User Accounts,DC=Ofsteded,DC=Ofsted,DC=Gov,DC=Uk"
+        Get-ADUser -Identity $user.samaccountname | Move-ADObject -TargetPath "OU"
         Set-User -Identity $user.samaccountname -fax "LTA"
         Set-ADUser -Identity $user.samaccountname -Enable:$true
         Start-Sleep -Seconds 5
         $MB1 = Get-ADUser $user.samaccountname
         $MB3 = $MB1.UserPrincipalName
-        $MB4 = $MB1.SamAccountName + '@Ofsted365.mail.onmicrosoft.com'
+        $MB4 = $MB1.SamAccountName + '@ROUTING'
 
         Enable-RemoteMailbox -Identity $MB3 -RemoteRoutingAddress $MB4
         Start-Sleep -Seconds 1
@@ -183,17 +183,7 @@ $assignButton.Add_Click({
     
     {
 
-    02{"FebruaryPhoneTent@7"}
-    03{"MarchCloudHappy@7"}
-    04{"AprilNokiaWater@7"}
-    05{"MayPencilWire@7"}
-    06{"JuneBridgeAgile@7"}
-    07{"JulyBrickBent@7"}
-    08{"AugustPlayError@7"}
-    09{"SeptemberRuffleCake@7"}
-    10{"OctoberNotebookHelp@7"}
-    11{"NovemberShufflePaid@7"}
-    12{"DecemberPlankWedding@7"}
+  #PASSWORDS HERE
 
     }
 
@@ -221,39 +211,7 @@ $assignButton.Add_Click({
 
 function boxxebuild{
 
-$hashLocation = @{'Birmingham'='
-23 Stephenson Street
-Birmingham
-B2 4BH';
-'Bristol'='
-2 Rivergate
-Temple Quay
-Bristol
-BS1 6EH';'Cambridge'='
-1st floor
-Eastbrook
-Shaftesbury Road
-Cambridge
-CB2 8DR';'London'='
-Clive House
-70 Petty France
-Westminster
-London
-SW1H 9EX';'Manchester'='
-Piccadilly Gate​
-Store Street
-Manchester
-M1 2WD';'Nottingham' = '
-Agora
-6 Cumberland Place
-Nottingham
-NG1 6HJ';'York'='
-2nd Floor​
-Foss House
-Kings Pool
-1-2 Peasholme Green
-York
-YO1 7PX'}
+$hashLocation = @{OFFICE LOCATIONS}
 
 $hmi_scri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Pro 7/7+')
 $eyri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Laptop 4')
@@ -344,7 +302,7 @@ $emailButton.Font                = New-Object System.Drawing.Font('Microsoft San
 $ComboBox1                       = New-Object system.Windows.Forms.ComboBox
 $ComboBox1.width                 = 190
 $ComboBox1.height                = 20
-@('HMI/SCRI','EYRI','Director Level','IT Role','Hybrid Worker','Office Based','Contractor') | ForEach-Object {[void] $ComboBox1.Items.Add($_)}
+@('JOB ROLES HERE') | ForEach-Object {[void] $ComboBox1.Items.Add($_)}
 $ComboBox1.location              = New-Object System.Drawing.Point(120,98)
 $ComboBox1.Font                  = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
@@ -352,22 +310,7 @@ $ComboBox1.Font                  = New-Object System.Drawing.Font('Microsoft San
 $Form0.controls.AddRange(@($kitlabel,$samText,$samLabel,$Label1,$Label2,$dateText,$emailButton,$ComboBox1,$ComboBox2,$rolelabel))
 
 $boxxeEmail = @'
-Boxxe please can you reply back with a ticket reference once this has been logged and confirm when collected
-NEW STARTER
- 
-The name of the user: {0}
-Job Role (One of: HMI; SCRI; EYRI; Director level; BI Developer/ IT Role; Hybrid Worker; Office Based; Contractor ): {1}
-Device Type: {2}
-Any additional item(s) requested: {3}
-Username: {4}
-Password:{5}
-Email: {6}
-Delivery Date: {7}
-Phone number (if needed for DPD updates): Managers Phone: {8}
-Delivery address: {9}
-
-Thanks,
-IT Service Desk Team
+EMAIL HERE FOR FORMATTING
 
 '@
 
