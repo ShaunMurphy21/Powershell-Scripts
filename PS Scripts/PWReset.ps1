@@ -1,5 +1,5 @@
 ﻿Import-Module Active-Directory
-Set-Location 'Ofsted.Gov.Uk'
+Set-Location ''
 $hash = [ordered]@{'10'='Enter October here';'11'='Enter November here';'12'='Enter December here'}
 $month = Get-Date -UFormat "%m"
 $month = [string]$month
