@@ -28,7 +28,7 @@ function InfoForm( $msgBody){
 
 $gammaEmail = @'
 
-Hi Gamma,
+Hi,
 
 Could you please {0} {1} for user {2} ; {3}
 
@@ -40,13 +40,13 @@ Thanks,
 
 $hashLocation = @{officeLocations}
 
-$hmi_scri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Pro 7/7+')
-$eyri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Laptop 4')
-$director = @('PSU x1 Headset x1 Mobile x1','Surface Pro 7')
-$bi_it = @('PSU x1 Headset x1','Surface Pro 7/7+')
-$hybrid = @('PSU x1 Headset x1','Surface Pro 5/6')
-$office = @('PSU x1 Headset x1','Surface Pro 5/6')
-$Contractor = @('PSU x1','Lenovo 260')
+$hmi_scri = @('')
+$eyri = @('')
+$director = @('')
+$bi_it = @('')
+$hybrid = @('')
+$office = @('')
+$Contractor = @('')
 
 $boxxeEmail = @'
 Email for formatting goes here
@@ -307,14 +307,14 @@ $roleBox                         = New-Object system.Windows.Forms.ComboBox
 $roleBox.width                   = 134
 $roleBox.height                  = 20
 $roleBox.location                = New-Object System.Drawing.Point(74,22)
-@('HMI/SCRI','EYRI','Director Level','IT Role','Hybrid Worker','Office Based','Contractor') | ForEach-Object {[void] $roleBox.Items.Add($_)}
+@('') | ForEach-Object {[void] $roleBox.Items.Add($_)}
 $roleBox.Font                    = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
 $officeBox                       = New-Object system.Windows.Forms.ComboBox
 $officeBox.width                 = 135
 $officeBox.height                = 20
 $officeBox.location              = New-Object System.Drawing.Point(73,59)
-@('Birmingham','Bristol','Cambridge','London','Manchester','Nottingham','York') | ForEach-Object {[void] $officeBox.Items.Add($_)}
+@('') | ForEach-Object {[void] $officeBox.Items.Add($_)}
 $officeBox.Font                  = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
 $dateBox                         = New-Object system.Windows.Forms.TextBox
@@ -333,13 +333,13 @@ $boxxeButton.Font                = New-Object System.Drawing.Font('Microsoft San
 
 $boxxeButton.Add_Click({
  
-    if($roleBox.SelectedItem -eq 'HMI/SCRI'){$a = $hmi_scri}
-    if($roleBox.SelectedItem -eq 'EYRI'){$a = $eyri}
-    if($roleBox.SelectedItem -eq 'Director Level'){$a = $director}
-    if($roleBox.SelectedItem -eq 'IT Role'){$a = $bi_it}
-    if($roleBox.SelectedItem -eq 'Hybrid Worker'){$a = $hybrid}
-    if($roleBox.SelectedItem -eq 'Office Based'){$a = $office}
-    if($roleBox.SelectedItem -eq 'Contractor'){$a = $Contractor}
+    if($roleBox.SelectedItem -eq ''){$a = $hmi_scri}
+    if($roleBox.SelectedItem -eq ''){$a = $eyri}
+    if($roleBox.SelectedItem -eq ''){$a = $director}
+    if($roleBox.SelectedItem -eq ''){$a = $bi_it}
+    if($roleBox.SelectedItem -eq ''){$a = $hybrid}
+    if($roleBox.SelectedItem -eq ''){$a = $office}
+    if($roleBox.SelectedItem -eq ''){$a = $Contractor}
 
     $user = Get-ADUser -Identity $samName.Text -Properties *
     $new = Get-ADUser -Identity $user.Manager -Properties * | select Name
@@ -451,7 +451,7 @@ $loginButton.Add_Click({
 
     Connect-MsolService
     $UserCredOP = Get-Credential
-    $SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://e2k161hq.ofsteded.ofsted.gov.uk/PowerShell/ -Authentication Kerberos -Credential $UserCredOP
+    $SessionOP = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri http://k/PowerShell/ -Authentication Kerberos -Credential $UserCredOP
     Import-PSSession $SessionOP -allowclobber
     lol
 
