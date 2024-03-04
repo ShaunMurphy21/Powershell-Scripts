@@ -213,13 +213,13 @@ function boxxebuild{
 
 $hashLocation = @{OFFICE LOCATIONS}
 
-$hmi_scri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Pro 7/7+')
-$eyri = @('PSU x1	Headset x1	Bag x1	Port Replicator x1	Monitor x1	KB x1	Mouse x1	Printer x1	Surge protector x1	Mobile x1','Surface Laptop 4')
-$director = @('PSU x1 Headset x1 Mobile x1','Surface Pro 7')
-$bi_it = @('PSU x1 Headset x1','Surface Pro 7/7+')
-$hybrid = @('PSU x1 Headset x1','Surface Pro 5/6')
-$office = @('PSU x1 Headset x1','Surface Pro 5/6')
-$Contractor = @('PSU x1','Lenovo 260')
+$hmi_scri = @('')
+$eyri = @('')
+$director = @('')
+$bi_it = @('')
+$hybrid = @('')
+$office = @('')
+$Contractor = @('')
 
 
 $Form0                            = New-Object system.Windows.Forms.Form
@@ -271,7 +271,7 @@ $Label1.Font                     = New-Object System.Drawing.Font('Microsoft San
 $ComboBox2                       = New-Object system.Windows.Forms.ComboBox
 $ComboBox2.width                 = 190
 $ComboBox2.height                = 20
-@('Birmingham','Bristol','Cambridge','London','Manchester','Nottingham','York') | ForEach-Object {[void] $ComboBox2.Items.Add($_)}
+@('') | ForEach-Object {[void] $ComboBox2.Items.Add($_)}
 $ComboBox2.location              = New-Object System.Drawing.Point(120,125)
 $ComboBox2.Font                  = New-Object System.Drawing.Font('Microsoft Sans Serif',10)
 
@@ -317,13 +317,13 @@ EMAIL HERE FOR FORMATTING
 
 $emailButton.Add_Click({
  
-    if($ComboBox1.SelectedItem -eq 'HMI/SCRI'){$a = $hmi_scri}
-    if($ComboBox1.SelectedItem -eq 'EYRI'){$a = $eyri}
-    if($ComboBox1.SelectedItem -eq 'Director Level'){$a = $director}
-    if($ComboBox1.SelectedItem -eq 'IT Role'){$a = $bi_it}
-    if($ComboBox1.SelectedItem -eq 'Hybrid Worker'){$a = $hybrid}
-    if($ComboBox1.SelectedItem -eq 'Office Based'){$a = $office}
-    if($ComboBox1.SelectedItem -eq 'Contractor'){$a = $Contractor}
+    if($ComboBox1.SelectedItem -eq ''){$a = $hmi_scri}
+    if($ComboBox1.SelectedItem -eq ''){$a = $eyri}
+    if($ComboBox1.SelectedItem -eq ''){$a = $director}
+    if($ComboBox1.SelectedItem -eq ''){$a = $bi_it}
+    if($ComboBox1.SelectedItem -eq ''){$a = $hybrid}
+    if($ComboBox1.SelectedItem -eq ''){$a = $office}
+    if($ComboBox1.SelectedItem -eq ''){$a = $Contractor}
 
     $user = Get-ADUser $samText.Text -Properties *
     $new = Get-ADUser $user.Manager -Properties * | select Name
