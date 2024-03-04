@@ -181,7 +181,7 @@ $Groupbox2.controls.AddRange(@($Label1,$usernameText,$checkButton,$Label2,$Label
 
 
 #region Logic 
-$groupList_=@('RestrictedDataAcquisition', 'RestrictedDatadevelopment','RestrictedRaise', 'RestrictedRaise_Sensitive','RestrictedRAISESummaryReports','RestrictedFurtherEducationandSkills','RestrictedFurtherEducationandSkillsRemit','RestrictedSocialCare','RestrictedSocialCare_Sensitive','RestrictedSchools','RestrictedRasam','RestrictedEarlyYearsTeam','RestrictedIndependentSchools','RestrictedL3VAANDPIDPDATA','RestrictedOBREPORTS')
+$groupList_=@('')
 #endregion
 foreach ($group in $groupList_) {
     $groupList.Items.Add($group)
