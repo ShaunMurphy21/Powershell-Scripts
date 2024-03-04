@@ -21,7 +21,7 @@ function InfoForm( $msgBody){
 
 $gammaEmail = @'
 
-Hi Gamma,
+Hi ,
 
 Could you please assign {0} to user {1} ; {2}
 
@@ -37,7 +37,7 @@ Import-PSSession $SessionOP -allowclobber
 
 $Form                            = New-Object system.Windows.Forms.Form
 $Form.ClientSize                 = New-Object System.Drawing.Point(400,150)
-$Form.text                       = "Littlefish - Scripts"
+$Form.text                       = ""
 $Form.TopMost                    = $false
 
 
