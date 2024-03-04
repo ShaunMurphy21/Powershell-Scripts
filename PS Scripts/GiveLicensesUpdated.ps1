@@ -1,17 +1,5 @@
 ﻿Connect-MsolService
 
-Write-Host " ___       ___  _________  _________  ___       _______   ________ ___  ________  ___  ___     "-ForegroundColor Magenta; 
-Write-Host "|\  \     |\  \|\___   ___\\___   ___\\  \     |\  ___ \ |\  _____\\  \|\   ____\|\  \|\  \    "-ForegroundColor Blue;
-Write-Host "\ \  \    \ \  \|___ \  \_\|___ \  \_\ \  \    \ \   __/|\ \  \__/\ \  \ \  \___|\ \  \\\  \   "-ForegroundColor DarkRed;
-Write-Host " \ \  \    \ \  \   \ \  \     \ \  \ \ \  \    \ \  \_|/_\ \   __\\ \  \ \_____  \ \   __  \  "-ForegroundColor Green; 
-Write-Host "  \ \  \____\ \  \   \ \  \     \ \  \ \ \  \____\ \  \_|\ \ \  \_| \ \  \|____|\  \ \  \ \  \ "-ForegroundColor Yellow;
-Write-Host "   \ \_______\ \__\   \ \__\     \ \__\ \ \_______\ \_______\ \__\   \ \__\____\_\  \ \__\ \__\"-ForegroundColor DarkGreen;
-Write-Host "    \|_______|\|__|    \|__|      \|__|  \|_______|\|_______|\|__|    \|__|\_________\|__|\|__|"-ForegroundColor Cyan;
-Write-Host "                                                                          \|_________|         "-ForegroundColor Magenta;
-Write-Host "                                                                                               "-ForegroundColor DarkYello;
-Write-Host "                                                                                               "-ForegroundColor Magenta;
-
-
 
 function MainProg{
 
