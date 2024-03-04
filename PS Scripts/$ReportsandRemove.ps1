@@ -1,8 +1,8 @@
 ﻿
 Write-Output "Please ensure the Csv is in the format: "
 Write-Output "mail"
-Write-Output "foo@ofsted.gov.uk"
-Write-Output "bar@ofsted.gov.uk"
+Write-Output "foo@"
+Write-Output "bar@"
 
 
 <#
@@ -23,10 +23,10 @@ $userPrin = 'UserPrincipalName'
 $list = New-Object Collections.Generic.List[string] #creates the lsit
 #RemGroup: hashtable of all restricted groups, select what group users need to be removed from - then filter through each email, get their samaccountname and remove them from the group selected.
 function RemGroup{
-    $script:groups = [ordered]@{'1' ='RestrictedDataAcquisition';'2' = 'RestrictedDatadevelopment'; '3' = 'RestrictedRaise';'4' = 'RestrictedRaise_Sensitive';`
-    '5'= 'RestrictedRAISESummaryReports'; '6' = 'RestrictedFurtherEducationandSkills';'7' = 'RestrictedFurtherEducationandSkillsRemit'; '8' = 'RestrictedSocialCare';`  #hashtable
-    '9'='RestrictedSocialCare_Sensitive';'10'='RestrictedSchools';'11'='RestrictedRasam';'12'='RestrictedEarlyYearsTeam';'13'='RestrictedIndependentSchools';`
-    '14'='RestrictedL3VAANDPIDPDATA';'15'='RestrictedOBREPORTS'}
+    $script:groups = [ordered]@{'1' ='';'2' = ''; '3' = '';'4' = '';`
+    '5'= ''; '6' = '';'7' = ''; '8' = '';`  #hashtable
+    '9'='';'10'='';'11'='';'12'='';'13'='';`
+    '14'='';'15'=''}
     $groups
 
     
