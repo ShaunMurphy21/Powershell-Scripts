@@ -31,10 +31,10 @@ catch
 
             }
 	}
-        #The below is the email to cloud direct with some formatting, can be copied and pasted into an email
-        "`n`nEmail to support@mail.clouddirect.net"
+        #The below is the email, can be copied and pasted into an email
+        "`n`nEmail to......"
         "______________________________________________________________"
-        "Hi Cloud Direct,"
+        "Hi ,"
 
         "`nPlease can you disable the voice mail for the following user:"
         "Ofsted Ref: ENTER REFERENCE"
